@@ -10,7 +10,8 @@
 
 int main()
 {
-  dushezhi();
+  /*
+    dushezhi();
   chushidu();
   signal(SIGHUP,tuichu);
   signal(SIGINT,tuichu);
@@ -18,8 +19,9 @@ int main()
   signal(SIGSTOP,tuichu);
   signal(SIGTERM,tuichu);
   signal(SIGTSTP,tuichu);
+  */
   pcapinit();
-  pcap_loop(pp,0,huidiao,NULL);
+  pcap_loop(pp,-1,huidiao,NULL);
   return 0;
 }
 

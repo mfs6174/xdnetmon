@@ -1,6 +1,7 @@
-const int changdu=1;
+const int changdu=60;
 char ebuf[PCAP_ERRBUF_SIZE];
-char filter_exp[] = "src net 202.117.112.0 mask 255.255.240.0"; /* 过 滤表达式 */
+char filter_exp[] = "(host 115.155.56.234) and (not (net 202.117.112.0 mask 255.255.240.0)) and (not (net 222.25.128.0 mask 255.255.192.0)) and (not (net 219.245.64.0 mask 255.255.192.0)) and (not (net 219.244.112.0 mask 255.255.240.0)) and (not (((dst net 115.155.0.0 mask 255.255.192.0) and (src host 115.155.56.234)) or ((dst host 115.155.56.234) and (src net 115.155.0.0 mask 255.255.192.0)))) and (not (net 210.27.0.0 mask 255.255.240.0))"; /* 过 滤表达式 */
+struct bpf_program fp;
 bpf_u_int32 mask; /* 网 络掩码 */
 bpf_u_int32 net; /* IP */
 struct pcap_pkthdr header; /* pcap头 */
@@ -11,19 +12,23 @@ pcap_t *pp;
 void pcapinit()
 {
   pp=pcap_open_live(dev.c_str(),changdu,0,0,ebuf);
-  pcap_lookupnet(NULL,&net,&mask,ebuf);
+  pcap_lookupnet(dev.c_str(),&net,&mask,ebuf);
+  pcap_compile(pp, &fp, filter_exp, 1, net);
+  pcap_setfilter(pp, &fp);
 }
 
 void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)
 {
   gongzuo+=tou->len;
   jiange+=tou->len;
-  //cout<<tou->len<<endl;
-    if (jiange>=_jiange)
-    {
-      shishi(gongzuo);
-      jiange=0;
-    }
+  cout<<tou->len<<endl;
+  /*
+  if (jiange>=_jiange)
+  {
+    shishi(gongzuo);
+    jiange=0;
+  }
+  */
 }
 
 
