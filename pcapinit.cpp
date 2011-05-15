@@ -1,3 +1,4 @@
+#include <string>
 #include "h.h"
 const int changdu=60;
 char ebuf[PCAP_ERRBUF_SIZE];

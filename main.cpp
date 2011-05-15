@@ -1,13 +1,6 @@
 #include "include.h"
 #include "var.h"
-#include "hunman.cpp"
-#include "file.cpp"
-#include "pcapinit.cpp"
-#include "exit.cpp"
-#include "interactive.cpp"
-#include "conf.cpp"
-#include "isout.cpp"
-
+#include "h.h"
 int main()
 {
   /*
