@@ -1,0 +1,1 @@
+All : main.cpp var.o 
