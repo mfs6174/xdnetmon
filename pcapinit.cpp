@@ -54,14 +54,20 @@ void pcapinit()
   pcap_setfilter(pp, &fp);
 }
 
+void ip2s(string &s)
+{
+  
+}
+
 void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)
 {
+  string id="";
   // gongzuo+=tou->len;
   // jiange+=tou->len;
   // cout<<tou->len<<endl;
   dangeth=(struct sniff_ethernet *)(packet);
   dangip=(struct sniff_ip *)(packet+Ethchangdu);
-  id=hash();
+  ip2s(id);
   pushmap(id,tou->len);
 }
 
