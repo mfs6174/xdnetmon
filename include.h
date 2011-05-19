@@ -9,8 +9,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <map>
-#include <inet.h>
-#include <in.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
 using namespace std;
 
 

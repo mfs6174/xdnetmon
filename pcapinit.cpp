@@ -5,7 +5,7 @@ const int changdu=60;
 const int Ethchangdu=14;
 char ebuf[PCAP_ERRBUF_SIZE];
 char filter_exp[] = "(not (net 202.117.112.0 mask 255.255.240.0)) and (not (net 222.25.128.0 mask 255.255.192.0)) and (not (net 219.245.64.0 mask 255.255.192.0)) and (not (net 219.244.112.0 mask 255.255.240.0)) and (not ( (dst net 192.168.0.0 mask 255.255.252.0) and (src net 192.168.0.0 mask 255.255.252.0) ) ) and (not (net 210.27.0.0 mask 255.255.240.0))"; /* 过 滤表达式 */
-extern Shezhi shezhi;
+extern struct Shezhi shezhi;
 struct bpf_program fp;
 bpf_u_int32 mask; /* 网 络掩码 */
 bpf_u_int32 net; /* IP */

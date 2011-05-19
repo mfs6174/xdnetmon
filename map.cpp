@@ -8,7 +8,7 @@ int pushmap(const string &x,int y)
 {
   map<string,long long>::iterator p=hash.find(x);
   if (p!=hash.end())
-    (*p)+=y;
+    (*p).second+=y;
   else
   {
     hash.insert(map<string,long long>::value_type(x,y));
@@ -20,7 +20,7 @@ int pushmap(const string &x,int y)
 int setmap()
 {
   for (map<string,long long>::iterator i=hash.begin();i!=hash.end();i++)
-    (*i)=0;
+    (*i).second=0;
   return hash.size();
 }
 
