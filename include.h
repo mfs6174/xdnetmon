@@ -11,6 +11,7 @@
 #include <map>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <sqlite3.h>
 using namespace std;
 
 

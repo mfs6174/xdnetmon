@@ -2,7 +2,7 @@
 #include "h.h"
 
 extern map<string,long long> hash;
-//map<string,int> huodong;
+extern map<string,int> sudu;
 
 int pushmap(const string &x,int y)
 {
@@ -12,7 +12,7 @@ int pushmap(const string &x,int y)
   else
   {
     hash.insert(map<string,long long>::value_type(x,y));
-    // huodong.insert(map<string,int>::value_type(x,0));
+    // sudu.insert(map<string,int>::value_type(x,0));
   }
   return hash.size();
 }
