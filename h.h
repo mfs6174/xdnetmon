@@ -2,7 +2,7 @@ struct Shezhi
 {
   string dev;
   bool mode,zhiding;
-  int  jiange;
+  int  jiange,shijianpian;
 };
 
 void pcapinit();
