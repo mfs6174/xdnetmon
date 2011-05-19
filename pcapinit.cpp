@@ -46,7 +46,7 @@ struct sniff_ip {
 sniff_ip dangip;
 sniff_ethernet dangeth;
 
-void pcapinit()
+void pcapinit() //初始化函数
 {
   pp=pcap_open_live(dev.c_str(),changdu,0,0,ebuf);
   pcap_lookupnet(dev.c_str(),&net,&mask,ebuf);
@@ -54,20 +54,38 @@ void pcapinit()
   pcap_setfilter(pp, &fp);
 }
 
-void ip2s(string &s)
+void zuoid(string &s,bool fl) //转换mac和ip为一个id字符串
 {
-  
+  string ss;
+  if (fl)
+  {
+    s=(char *)(dangeth.ether_shost);
+    ss=inet_ntoa(dangip.ip_src);
+    s=s+ss;
+  }
+  else
+  {
+    s=(char *)(dangeth.ether_dhost);
+    ss=inet_ntoa(dangip.ip_dst);
+    s=s+ss;
+  }
 }
 
-void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)
+void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回调函数，解析数据包，写入map
 {
   string id="";
+  bool fl=false;
+  static bpf_u_int32 pan=net&mask;
   // gongzuo+=tou->len;
   // jiange+=tou->len;
   // cout<<tou->len<<endl;
-  dangeth=(struct sniff_ethernet *)(packet);
-  dangip=(struct sniff_ip *)(packet+Ethchangdu);
-  ip2s(id);
+  dangeth=(struct sniff_ethernet *)(bao);
+  dangip=(struct sniff_ip *)(bao+Ethchangdu);
+  if ((dangip.ip_src.s_addr)&mask==pan)
+    fl=true;
+  else
+    fl=false;
+  zuoid(id,fl);
   pushmap(id,tou->len);
 }
 
