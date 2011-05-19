@@ -43,8 +43,8 @@ struct sniff_ip {
 #define IP_HL(ip) (((ip)->ip_vhl) & 0x0f)
 #define IP_V(ip) (((ip)->ip_vhl) >> 4)
 
-sniff_ip dangip;
-sniff_ethernet dangeth;
+sniff_ip *dangip;
+sniff_ethernet *dangeth;
 
 void pcapinit() //初始化函数
 {
@@ -59,14 +59,14 @@ void zuoid(string &s,bool fl) //转换mac和ip为一个id字符串
   string ss;
   if (fl)
   {
-    s=(char *)(dangeth.ether_shost);
-    ss=inet_ntoa(dangip.ip_src);
+    s=(char *)(dangeth->ether_shost);
+    ss=inet_ntoa(dangip->ip_src);
     s=s+ss;
   }
   else
   {
-    s=(char *)(dangeth.ether_dhost);
-    ss=inet_ntoa(dangip.ip_dst);
+    s=(char *)(dangeth->ether_dhost);
+    ss=inet_ntoa(dangip->ip_dst);
     s=s+ss;
   }
 }
@@ -81,7 +81,7 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   // cout<<tou->len<<endl;
   dangeth=(struct sniff_ethernet *)(bao);
   dangip=(struct sniff_ip *)(bao+Ethchangdu);
-  if ((dangip.ip_src.s_addr)&mask==pan)
+  if ((dangip->ip_src.s_addr)&mask==pan)
     fl=true;
   else
     fl=false;
