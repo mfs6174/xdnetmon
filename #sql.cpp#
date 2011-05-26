@@ -7,7 +7,7 @@ int sqlf;
 
 int sqlinit()
 {
-  bool sqlf=sqlite3_open("netmon.db",&db);
+  sqlf=sqlite3_open("netmon.db",&db);
   if (sqlf)
   {
     sqlite3_close(db);

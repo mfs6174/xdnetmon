@@ -2,7 +2,7 @@
 #include "h.h"
 
 extern map<string,long long> hash;
-extern map<string,int> sudu;
+//extern map<string,int> sudu;
 
 int pushmap(const string &x,int y)
 {
@@ -17,10 +17,19 @@ int pushmap(const string &x,int y)
   return hash.size();
 }
 
-int setmap()
+int setmap(long long t)
 {
   for (map<string,long long>::iterator i=hash.begin();i!=hash.end();i++)
+  {
+    if ((*i).second==0)
+    {
+      i=hash.erase(i);
+      continue;
+    }
+    sqlv((*i).first,(*i).second,t);
+    sqlflow((*i).first,(*i).second,t);
     (*i).second=0;
+  }
   return hash.size();
 }
 
