@@ -7,3 +7,4 @@ double _gb(long long x)
 {
   return (double)x/_gb_;
 }
+

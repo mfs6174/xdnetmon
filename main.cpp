@@ -11,6 +11,7 @@ int main()
   signal(SIGTERM,tuichu);
   signal(SIGTSTP,tuichu);
   signal(SIGALRM,timer);
+  sqlinit();
   pcapinit();
   alarm(shezhi.jiange);
   pcap_loop(pp,-1,huidiao,NULL);

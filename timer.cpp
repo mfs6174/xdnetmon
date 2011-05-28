@@ -6,8 +6,7 @@ extern Shezhi shezhi;
 int timer()
 {
   alarm(0);
-  long long chuo=time(NULL);
-  setmap(chuo);
+  setmap();
   alarm(shezhi.jiange);
   return 0;
 }

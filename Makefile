@@ -8,3 +8,4 @@ map.o : map.cpp var.o h.h include.h
 	g++ -g -o map.o -c map.cpp -l var.o
 exit.o: exit.cpp var.o include.h h.h
 	g++ -g -o exit.o -c exit.cpp -l var.o
+

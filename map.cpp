@@ -1,34 +1,40 @@
 #include "include.h"
 #include "h.h"
 
-extern map<string,long long> hash;
-//extern map<string,int> sudu;
+
+extern map<string,D> hash;
 
 int pushmap(const string &x,int y)
 {
-  map<string,long long>::iterator p=hash.find(x);
+  map<string,D>::iterator p=hash.find(x);
   if (p!=hash.end())
-    (*p).second+=y;
+    (*p).second.liu+=y;
   else
   {
-    hash.insert(map<string,long long>::value_type(x,y));
-    // sudu.insert(map<string,int>::value_type(x,0));
+    D tmp;
+    tmp.liu=y;
+    tmp.kai=time(NULL);
+    hash.insert(map<string,D>::value_type(x,tmp));
   }
   return hash.size();
 }
 
-int setmap(long long t)
+int setmap()
 {
-  for (map<string,long long>::iterator i=hash.begin();i!=hash.end();i++)
+  long long t=time(NULL);
+  for (map<string,D>::iterator i=hash.begin();i!=hash.end();)
   {
-    if ((*i).second==0)
+    if ((*i).second.liu==0)
     {
-      i=hash.erase(i);
+      hash.erase(i++);
       continue;
     }
-    sqlv((*i).first,(*i).second,t);
-    sqlflow((*i).first,(*i).second,t);
-    (*i).second=0;
+    long long tmp=(*i).second.liu;
+    (*i).second.liu=0;
+    sqlspeed((*i).first,tmp,(*i).second.kai,t);
+    sqlflow((*i).first,tmp,t);
+    (*i).second.kai=t;
+    i++;
   }
   return hash.size();
 }

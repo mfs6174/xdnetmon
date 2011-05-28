@@ -61,13 +61,13 @@ void zuoid(string &s,bool fl) //转换mac和ip为一个id字符串
   {
     s=(char *)(dangeth->ether_shost);
     ss=inet_ntoa(dangip->ip_src);
-    s=s+ss;
+    s=s+"##"+ss;
   }
   else
   {
     s=(char *)(dangeth->ether_dhost);
     ss=inet_ntoa(dangip->ip_dst);
-    s=s+ss;
+    s=s+"##"+ss;
   }
 }
 
@@ -76,9 +76,6 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   string id="";
   bool fl=false;
   static bpf_u_int32 pan=net&mask;
-  // gongzuo+=tou->len;
-  // jiange+=tou->len;
-  // cout<<tou->len<<endl;
   dangeth=(struct sniff_ethernet *)(bao);
   dangip=(struct sniff_ip *)(bao+Ethchangdu);
   if ((dangip->ip_src.s_addr)&mask==pan)
