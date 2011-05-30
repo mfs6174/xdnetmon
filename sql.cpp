@@ -4,7 +4,8 @@
 sqlite *db=NULL;
 char *sqlerr=NULL;
 int sqlf;
-string yuju,ttt;
+string yuju;
+
 
 void sqlinit()
 {
@@ -14,9 +15,9 @@ void sqlinit()
     sqlite3_close(db);
     exit(1);
   }
-  yuju="CREATE TABLE IF NOT EXISTS flow ( mac TEXT,ip TEXT,data INT,start DATETIME,end DATETIME)";
+  yuju="CREATE TABLE IF NOT EXISTS flow ( mac TEXT,ip TEXT,data INT,start DATETIME,end DATETIME);";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
-  yuju="CREATE TABLE IF NOT EXISTS speed ( mac TEXT,ip TEXT,rate INT,end DATETIME)";
+  yuju="CREATE TABLE IF NOT EXISTS speed ( mac TEXT,ip TEXT,rate INT,end DATETIME);";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
 }
 
@@ -37,23 +38,32 @@ string getip(const string &ss)
 
 void sqlflow(const string &ss,long long liu,long long kai,long long tt)
 {
-  bool cunzai=false;
+  char **jieguo=NULL;
+  int hang=0,lie=0;
   string mac=getmac(ss),ip=getip(ss);
-  yuju="INSERT INTO flow SELECT * FROM flow WHERE mac='"+mac+"' AND ip='"+ip+"' AND ("+str(tt)+"-start<"+str(shezhi.pian);
-  if (!cunzai)
+  yuju="SELECT * FROM flow WHERE mac='"+mac+"' AND ip='"+ip+"' AND ("+str(tt)+"-start<"+str(shezhi.pian)+");";
+  sqlf=sqlite3_get_table(db,yuju.c_str(),&jieguo,&hang,&lie,&sqlerr);
+  sqlite3_free_table(jieguo);
+  if (!hang)
   {
-    yuju="INSERT INTO flow VALUES ('"+mac+"','"+ip+"','"+str(liu)+"','"+str(kai)+"','"+str(tt)+"')";
+    yuju="INSERT INTO flow VALUES ('"+mac+"','"+ip+"',"+str(liu)+",'"+str(kai)+"','"+str(tt)+"');";
     sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   }
   else
   {
-    
+    if (hang>1)
+    {
+      exit(-1);
+    }
+    yuju="UPDATE flow SET data=data+"+str(liu)+",end='"str(tt)+"' WHERE mac='"+mac+"' AND ip='"+ip+"' AND ("+str(tt)+"-start<"+str(shezhi.pian)+");";
+  }
+  
   
 }
 
 void sqlspeed(const string &ss,long long liu,long long tt)
 {
-  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"','"+str(liu)+"','"+str(tt)+"')";
+  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str(liu)+",'"+str(tt)+"')";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
 }
 
