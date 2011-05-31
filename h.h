@@ -13,13 +13,14 @@ struct D
 void pcapinit();
 void huidiao(u_char *a,const struct pcap_pkthdr *b,const u_char *c);
 int pushmap(const string &a,int b);
-int setmap(long long a);
-void tuichu();
-int timer();
+int setmap();
+void tuichu(int a);
+void timer(int no);
 void sqlspeed(const string &a,long long b,long long c,long long d);
 void sqlflow(const string &a,long long b,long long c);
 void sqlinit();
 void sqlexit();
+double _mb(long long x);
 
    
 

@@ -3,6 +3,7 @@
 
 
 extern map<string,D> hash;
+extern long long zonghe;
 
 int pushmap(const string &x,int y)
 {
@@ -31,6 +32,7 @@ int setmap()
     }
     long long tmp=(*i).second.liu;
     (*i).second.liu=0;
+    zonghe+=tmp;
     sqlspeed((*i).first,tmp,(*i).second.kai,t);
     sqlflow((*i).first,tmp,t);
     (*i).second.kai=t;

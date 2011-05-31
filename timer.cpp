@@ -3,11 +3,10 @@
 
 extern Shezhi shezhi;
 
-int timer()
+void timer(int no)
 {
   alarm(0);
   setmap();
   alarm(shezhi.jiange);
-  return 0;
 }
 
