@@ -1,9 +1,8 @@
-
 struct Shezhi
 {
   string dev;
   bool mode,zhiding,log;
-  long long  jiange,shijianpian;
+  long long  jiange,pian;
 };
 
 struct D

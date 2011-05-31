@@ -26,7 +26,7 @@ void sqlexit()
   sqlite3_close(db);
 }
 
-string str(int x)
+string str(long long x)
 {
     ostringstream t;
     t<<x;
@@ -40,7 +40,7 @@ string str(double x)
   return t.str();
 }
 
-string getmac(const string &ss);
+string getmac(const string &ss)
 {
   return ss.substr(0,ss.find("##"));
 }
@@ -69,7 +69,7 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
     {
       exit(-1);
     }
-    yuju="UPDATE flow SET data=data+"+str(liu)+",end='"str(tt)+"' WHERE mac='"+mac+"' AND ip='"+ip+"' AND (";
+    yuju="UPDATE flow SET data=data+"+str(liu)+",end='"+str(tt)+"' WHERE mac='"+mac+"' AND ip='"+ip+"' AND (";
     yuju+=str(tt)+"-start<"+str(shezhi.pian)+");";
   } 
 }
