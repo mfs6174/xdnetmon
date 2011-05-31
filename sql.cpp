@@ -5,7 +5,7 @@ sqlite *db=NULL;
 char *sqlerr=NULL;
 int sqlf;
 string yuju;
-
+extern Shezhi shezhi;
 
 void sqlinit()
 {
@@ -17,7 +17,7 @@ void sqlinit()
   }
   yuju="CREATE TABLE IF NOT EXISTS flow ( mac TEXT,ip TEXT,data INT,start DATETIME,end DATETIME);";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
-  yuju="CREATE TABLE IF NOT EXISTS speed ( mac TEXT,ip TEXT,rate INT,end DATETIME);";
+  yuju="CREATE TABLE IF NOT EXISTS speed ( mac TEXT,ip TEXT,rate DOUBLE,end DATETIME);";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
 }
 
@@ -55,7 +55,8 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
     {
       exit(-1);
     }
-    yuju="UPDATE flow SET data=data+"+str(liu)+",end='"str(tt)+"' WHERE mac='"+mac+"' AND ip='"+ip+"' AND ("+str(tt)+"-start<"+str(shezhi.pian)+");";
+    yuju="UPDATE flow SET data=data+"+str(liu)+",end='"str(tt)+"' WHERE mac='"+mac+"' AND ip='"+ip+"' AND (";
+    yuju+=str(tt)+"-start<"+str(shezhi.pian)+");";
   }
   
   
@@ -63,7 +64,7 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
 
 void sqlspeed(const string &ss,long long liu,long long tt)
 {
-  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str(liu)+",'"+str(tt)+"')";
+  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+","+str((double)liu/shezhi.jiange)+","+str(tt)+"')";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
 }
 
