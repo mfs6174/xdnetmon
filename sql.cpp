@@ -1,7 +1,7 @@
-#include "h.h"
 #include "include.h"
+#include "h.h"
 
-sqlite *db=NULL;
+sqlite3 *db=NULL;
 char *sqlerr=NULL;
 int sqlf;
 string yuju;
@@ -26,14 +26,28 @@ void sqlexit()
   sqlite3_close(db);
 }
 
+string str(int x)
+{
+    ostringstream t;
+    t<<x;
+    return t.str();
+}
+
+string str(double x)
+{
+  ostringstream t;
+  t<<x;
+  return t.str();
+}
+
 string getmac(const string &ss);
 {
-  return ss.substr(ss.begin(),ss.find("##"));
+  return ss.substr(0,ss.find("##"));
 }
 
 string getip(const string &ss)
 {
-  ss.substr(ss.find("##")+2);
+ return ss.substr(ss.find("##")+2);
 }
 
 void sqlflow(const string &ss,long long liu,long long kai,long long tt)
@@ -57,9 +71,7 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
     }
     yuju="UPDATE flow SET data=data+"+str(liu)+",end='"str(tt)+"' WHERE mac='"+mac+"' AND ip='"+ip+"' AND (";
     yuju+=str(tt)+"-start<"+str(shezhi.pian)+");";
-  }
-  
-  
+  } 
 }
 
 void sqlspeed(const string &ss,long long liu,long long tt)
