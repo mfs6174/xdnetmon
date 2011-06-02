@@ -6,6 +6,7 @@ char *sqlerr=NULL;
 int sqlf;
 string yuju;
 extern Shezhi shezhi;
+extern char sss[255];
 
 void sqlgeterr(int s)
 {
@@ -57,11 +58,11 @@ string getip(const string &ss)
  return ss.substr(ss.find("##")+2);
 }
 
-void sqlflow(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const & ss,long long liu,long long kai,long long tt)
+void sqlflow(long long liu,long long kai,long long tt)
 {
   char **jieguo=NULL;
   int hang=0,lie=0;
-  string mac=getmac(ss),ip=getip(ss);
+  string ss=sss,mac=getmac(ss),ip=getip(ss);
   yuju="SELECT * FROM flow WHERE mac='"+mac+"' AND ip='"+ip+"' AND ("+str(tt)+"-start<"+str(shezhi.pian)+");";
   sqlf=sqlite3_get_table(db,yuju.c_str(),&jieguo,&hang,&lie,&sqlerr);
   sqlite3_free_table(jieguo);
@@ -85,8 +86,9 @@ void sqlflow(std::basic_string<char, std::char_traits<char>, std::allocator<char
   } 
 }
 
-void sqlspeed(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const & ss,long long liu,long long tt)
+void sqlspeed(long long liu,long long tt)
 {
+  string ss=sss;
   yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+","+str((double)liu/shezhi.jiange)+","+str(tt)+"')";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);

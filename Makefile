@@ -1,5 +1,5 @@
-All : main.cpp var.o include.h h.h pcap.o map.o sql.o exit.o timer.o hunman.o main.o
-	g++ -g -o netmon  -lstdc++ -lpcap -lsqlite3  pcap.o  sql.o map.o  exit.o hunman.o timer.o main.o var.o
+All : main.cpp var.o include.h h.h pcap.o  map.o sql.o exit.o timer.o hunman.o main.o
+	g++ -g -o netmon  -lstdc++ -lpcap -lsqlite3  pcap.o  sql.o  map.o exit.o hunman.o timer.o main.o var.o
 	sudo chmod +x netmon 
 main.o :main.cpp include.h h.h
 	g++ -g -o main.o -c main.cpp
