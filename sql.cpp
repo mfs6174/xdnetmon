@@ -57,7 +57,7 @@ string getip(const string &ss)
  return ss.substr(ss.find("##")+2);
 }
 
-void sqlflow(const string &ss,long long liu,long long kai,long long tt)
+void sqlflow(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const & ss,long long liu,long long kai,long long tt)
 {
   char **jieguo=NULL;
   int hang=0,lie=0;
@@ -85,7 +85,7 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
   } 
 }
 
-void sqlspeed(const string &ss,long long liu,long long tt)
+void sqlspeed(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const & ss,long long liu,long long tt)
 {
   yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+","+str((double)liu/shezhi.jiange)+","+str(tt)+"')";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);

@@ -33,8 +33,9 @@ int setmap()
     long long tmp=(*i).second.liu;
     (*i).second.liu=0;
     zonghe+=tmp;
-    sqlspeed((*i).first,tmp,(*i).second.kai,t);
-    sqlflow((*i).first,tmp,t);
+    string tt=(*i).first;
+    sqlspeed(tt,tmp,(*i).second.kai,t);
+    sqlflow(tt,tmp,t);
     (*i).second.kai=t;
     i++;
   }
