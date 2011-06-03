@@ -3,3 +3,5 @@
 long long zonghe=0;
 Shezhi shezhi;
 map<string,D> hash;
+char sss[255];
+
