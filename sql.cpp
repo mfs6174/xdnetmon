@@ -59,7 +59,7 @@ string getip(const string &ss)
  return ss.substr(ss.find("##")+2);
 }
 
-void sqlflow(const string ss,long long liu,long long kai,long long tt)
+void sqlflow(const string &ss,long long liu,long long kai,long long tt)
 {
   char **jieguo=NULL;
   int hang=0,lie=0;
@@ -87,7 +87,7 @@ void sqlflow(const string ss,long long liu,long long kai,long long tt)
   } 
 }
 
-void sqlspeed(const string ss,long long liu,long long tt)
+void sqlspeed(const string &ss,long long liu,long long tt)
 {
   //string ss=sss;
   yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str((double)liu/shezhi.jiange)+",'"+str(tt)+"')";
