@@ -12,7 +12,7 @@ void tuichu(int s)
     sqlexit();
     exit(-1);
   }
-  cout<<"收到信号"<<s<<"是否让程序退出?y or n";
+  cout<<"收到信号"<<s<<"是否让程序退出?y or n ";
   char ct;
   cin>>ct;
   if (ct=='y'||ct=='Y')

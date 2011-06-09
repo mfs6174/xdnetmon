@@ -77,7 +77,7 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   bool fl=false;
   static bpf_u_int32 pan=net&mask;
   dangeth=(struct libnet_ethernet_hdr *)(bao);
-  dangip=(struct libnet_ip_hdr *)(bao+sizeof());
+  dangip=(struct libnet_ip_hdr *)(bao+Ethchang);
   if ((dangip->ip_src.s_addr)&mask==pan)
     fl=true;
   else

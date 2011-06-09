@@ -32,7 +32,6 @@ void sqlinit()
 void sqlexit()
 {
   sqlite3_close(db);
-  exit(0);
 }
 
 string str(long long x)
