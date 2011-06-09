@@ -5,7 +5,7 @@ extern pcap_t *pp;
 int main()
 {
   shezhi.zhiding=true;
-  shezhi.dev="eth0";
+  shezhi.dev="eth1";
   shezhi.jiange=30;
   shezhi.pian=300;
   signal(SIGHUP,tuichu);
