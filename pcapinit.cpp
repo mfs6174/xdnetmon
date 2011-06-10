@@ -88,7 +88,7 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
 {
   string id="";
   bool fl=false;
-  static bpf_u_int32 pan=net&mask;
+  static bpf_u_int32 pan=net&mask;//判断无效,每种地址都存进去了.....
   dangeth=(struct sniff_ethernet *)(bao);
   dangip=(struct sniff_ip *)(bao+sizeof(sniff_ethernet));
   if ((dangip->ip_src.s_addr)&mask==pan)

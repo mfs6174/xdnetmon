@@ -19,8 +19,9 @@ void tuichu(int s)
   {
     pcap_close(pp);
     alarm(0);
+    setmap();
     sqlexit();
-    cout<<"程序终止,本次运行期间共产生外网流量"<<fixed<<setprecision(3)<<_mb(zonghe)<<endl;
+    cout<<"程序终止,本次运行期间共产生外网流量"<<fixed<<setprecision(3)<<_mb(zonghe)<<"MB"<<endl;
     exit(0);
   }
 }
