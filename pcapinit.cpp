@@ -54,18 +54,31 @@ void pcapinit() //初始化函数
   pcap_setfilter(pp, &fp);
 }
 
+void uc2mac(string &rr,u_char ss[])
+{
+  static char macfu[18]="0123456789ABCDEF";
+  rr="0";
+  int i;
+  for (i=0;i<ETHER_ADDR_LEN;i++)
+  {
+    rr.push_back(':');
+    rr.push_back(macfu[ss[i]>>4]);
+    rr.push_back(macfu[ss[i]%16]);
+  }
+}
+    
 void zuoid(string &s,bool fl) //转换mac和ip为一个id字符串
 {
   string ss;
   if (fl)
   {
-    s=(char *)(dangeth->ether_shost);
+    uc2mac(s,dangeth->ether_shost);
     ss=inet_ntoa(dangip->ip_src);
     s=s+"##"+ss;
   }
   else
   {
-    s=(char *)(dangeth->ether_dhost);
+    uc2mac(s,dangeth->ether_dhost);
     ss=inet_ntoa(dangip->ip_dst);
     s=s+"##"+ss;
   }
