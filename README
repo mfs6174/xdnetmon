@@ -1,10 +1,12 @@
-网络流量监视器 XDU专用
+XDnetmon
+XDnetmon是一个网络流量监视器 目前是XDU专用
 
-在linux网关上安装来监视局域网内每台电脑（ip与MAC的组合）的外网流量情况（典型应用 实验室）
+在linux网关上安装来监视局域网内每台电脑（ip与MAC的组合）的外网流量情况（典型应用 实验室共享一个校园网帐号上网）
 
-使用libpcap抓取外网流量包，使用sqlite来记录数据
-
-未完成
+使用libpcap抓包分析流量，使用sqlite3来记录数据,安装这两个库后make即可安装
 
 遵循GNU GPL协议发布，mfs6174版权所有
+请联系 mfs6174@gmail.com
+follow me on twitter @mfs6174
+Blog www.mfs6174.tk
 
