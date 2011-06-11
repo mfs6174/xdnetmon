@@ -21,6 +21,6 @@ void sqlspeed(const string &,long long, long long);
 void sqlinit();
 void sqlexit();
 double _mb(long long x);
-
+double _kb(long long x);
    
 

@@ -6,7 +6,6 @@ char *sqlerr=NULL;
 int sqlf;
 string yuju;
 extern Shezhi shezhi;
-//extern char sss[255];
 
 void sqlgeterr(int s)
 {
@@ -88,8 +87,7 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
 
 void sqlspeed(const string &ss,long long liu,long long tt)
 {
-  //string ss=sss;
-  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str((double)liu/shezhi.jiange)+",'"+str(tt)+"')";
+  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str(_kb(liu)/shezhi.jiange)+",'"+str(tt)+"')";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
 }
