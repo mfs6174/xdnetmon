@@ -110,31 +110,8 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
 
 void sqlspeed(const string &ss,long long liu,long long tt)
 {
-  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str(_kb(liu)/shezhi.jiange)+",'"+str(tt)+"')";
+  yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str(liu/shezhi.jiange)+",'"+str(tt)+"')";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
 }
-
-
-/*
-int main()
-{
-  shezhi.jiange=10;
-  shezhi.pian=30;
-  strcpy(sss,"aaaaaaa##115.155.56.234");
-  sqlinit();
-    sqlflow(100,1,10);
-  sqlspeed(100,10);
-  sqlflow(200,10,20);
-  sqlspeed(200,20);
-  sqlflow(111,20,30);
-  sqlspeed(111,30);
-  sqlflow(1000,30,40);
-  sqlspeed(1000,40);
-  sqlflow(32,51,53);
-  sqlspeed(30,53);
-  sqlexit();
-  return 0;
-}
-*/
 
