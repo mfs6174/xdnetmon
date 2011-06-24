@@ -30,19 +30,20 @@ int sqlf;
 string yuju;
 extern Shezhi shezhi;
 
-void sqlgeterr(int s)
+void sqlgeterr(int s) //sql错误处理,判断是否出错,参数s为sql执行状态,输出错误信息,每次执行完sql语句调用一次
 {
-  if (s)
+  if (s) //如果返回的不是sql正常
   {
-    cout<<s<<endl<<sqlerr<<endl;
-    tuichu(-1);
+    cout<<s<<endl<<sqlerr<<endl; //输出错误信息
+    tuichu(-1); //调用退出函数,尽量正常退出
   }
 }
 
-void sqlinit()
+void sqlinit() //sql数据库初始化,打开或新建数据库,如果新建,新建表
 {
-  sqlf=sqlite3_open("netmon.db",&db);
+  sqlf=sqlite3_open("netmon.db",&db);//打开数据库
   sqlgeterr(sqlf);
+  //以下新建2个表
   yuju="CREATE TABLE IF NOT EXISTS flow ( mac TEXT,ip TEXT,data INT,start DATETIME,end DATETIME);";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
@@ -51,47 +52,49 @@ void sqlinit()
   sqlgeterr(sqlf);
 }
 
-void sqlexit()
+void sqlexit()//sql退出处理,关闭连接,释放内存
 {
   sqlite3_close(db);
 }
 
-string str(long long x)
+string str(long long x)//长整形转为字符串,用于构造sql语句串
 {
     ostringstream t;
     t<<x;
     return t.str();
 }
 
-string str(double x)
+string str(double x)//浮点数转为字符串,构造sql语句用
 {
   ostringstream t;
   t<<x;
   return t.str();
 }
 
-string getmac(const string &ss)
+string getmac(const string &ss)//在id串中提取mac地址部分
 {
   return ss.substr(0,ss.find("##"));
 }
 
-string getip(const string &ss)
+string getip(const string &ss) //在id串中提取ip地址部分
 {
  return ss.substr(ss.find("##")+2);
 }
 
-void sqlflow(const string &ss,long long liu,long long kai,long long tt)
+void sqlflow(const string &ss,long long liu,long long kai,long long tt) //向数据库写入流量信息
 {
   char **jieguo=NULL;
   int hang=0,lie=0;
   string mac=getmac(ss),ip=getip(ss);
   yuju="SELECT * FROM flow WHERE mac='"+mac+"' AND ip='"+ip+"' AND ("+str(tt)+"-start<"+str(shezhi.pian)+");";
+  //查询语句,用于检查是否含有间隔小于时间片的记录
   sqlf=sqlite3_get_table(db,yuju.c_str(),&jieguo,&hang,&lie,&sqlerr);
   sqlite3_free_table(jieguo);
   sqlgeterr(sqlf);
-  if (!hang)
+  if (!hang)//如果没有
   {
     yuju="INSERT INTO flow VALUES ('"+mac+"','"+ip+"',"+str(liu)+",'"+str(kai)+"','"+str(tt)+"');";
+    //插入语句,插入一条记录
     sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
     sqlgeterr(sqlf);
   }
@@ -108,7 +111,7 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt)
   } 
 }
 
-void sqlspeed(const string &ss,long long liu,long long tt)
+void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入速度信息
 {
   yuju="INSERT INTO speed VALUES ('"+getmac(ss)+"','"+getip(ss)+"',"+str(liu/shezhi.jiange)+",'"+str(tt)+"')";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
