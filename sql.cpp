@@ -57,6 +57,8 @@ void sqlinit() //sql数据库初始化,打开或新建数据库,如果新建,新
 void sqlexit()//sql退出处理,关闭连接,释放内存
 {
   sqlite3_close(db);
+  if (sqlerr!=NULL)
+    sqlite3_free(sqlerr);
 }
 
 string str(long long x)//长整形转为字符串,用于构造sql语句串
@@ -92,7 +94,8 @@ void sqlflow(const string &ss,long long liu,long long kai,long long tt) //向数
   yuju="SELECT * FROM flow WHERE mac='"+mac+"' AND ip='"+ip+"' AND ("+str(tt)+"-start<"+str(shezhi.pian)+");";
   //查询语句,用于检查是否含有间隔小于时间片的记录
   sqlf=sqlite3_get_table(db,yuju.c_str(),&jieguo,&hang,&lie,&sqlerr);
-  sqlite3_free_table(jieguo);
+  if (jieguo!=NULL)
+    sqlite3_free_table(jieguo);
   sqlgeterr(sqlf);
   if (!hang)//如果没有
   {
