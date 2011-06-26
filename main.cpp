@@ -30,7 +30,7 @@ int main()
   shezhi.zhiding=true;
   shezhi.dev="eth1";
   shezhi.jiange=30;
-  shezhi.piasn=300;
+  shezhi.pian=300;
   signal(SIGHUP,tuichu);
   signal(SIGINT,tuichu);
   //signal(SIGKILL,tuichu);
