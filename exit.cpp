@@ -23,29 +23,33 @@
 
 #include "include.h"
 #include "h.h"
-extern pcap_t *pp;
-extern Shezhi shezhi;
-extern long long zonghe;
-void tuichu(int s)
+extern pcap_t *pp;//pcapinit.cpp中的全局变量,此处声明用于关闭句柄
+extern Shezhi shezhi;//var.cpp中的全局变量,设置信息的结构体
+extern long long zonghe;//全局变量,工作过程中的总流量
+void tuichu(int s)//正常退出的处理函数,s为状态
 {
   if (s==-1)
   {
-    pcap_close(pp);
-    alarm(0);
-    sqlexit();
-    exit(-1);
+    //如果状态为-1,则为错误退出,之前错误信息应该已经输出
+    pcap_close(pp);//关闭pcap的句柄
+    alarm(0);//关闭定时器
+    sqlexit();//执行sql.cpp中的sqlexit(),释放内存,正常关闭sqlite文件
+    exit(-1);//错误退出
   }
+  //否则,则为截获了会导致程序退出的系统信号
   cout<<"收到信号"<<s<<"是否让程序退出?y or n ";
   char ct;
   cin>>ct;
   if (ct=='y'||ct=='Y')
   {
+    //用户确认退出,执行与上面错误退出一样的退出过程
     pcap_close(pp);
     alarm(0);
-    setmap();
+    setmap();//在关闭sqlite连接之前,可能位于两次数据库操作中间,所以最后一次清空缓存,写入数据库,防止流量丢失
     sqlexit();
     cout<<"程序终止,本次运行期间共产生外网流量"<<fixed<<setprecision(3)<<_mb(zonghe)<<"MB"<<endl;
     exit(0);
+    //输出产生的从流量,正常退出
   }
 }
 
