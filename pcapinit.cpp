@@ -80,9 +80,11 @@ void pcapinit() //初始化函数,由main()在程序启动时调用,开启pcap�
 void uc2mac(string &rr,u_char ss[])//将usighed char类型的mac地址转换为6段16进制可读字符串,rr存储结果字符串,ss是待转换的字符数组
 {
   static char macfu[18]="0123456789ABCDEF";
-  rr="0";
+  rr="";
   int i;
-  for (i=0;i<ETHER_ADDR_LEN;i++)
+  rr.push_back(macfu[ss[0]>>4]);
+  rr.push_back(macfu[ss[0]%16]);
+  for (i=1;i<ETHER_ADDR_LEN;i++)
   {
     //分别取出unsigned char对应16进制的两位,存入字符串
     rr.push_back(':');
