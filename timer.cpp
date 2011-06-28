@@ -26,10 +26,10 @@
 
 extern Shezhi shezhi;
 
-void timer(int no)
+void timer(int no)//main.cpp中signal函数对SIGALRM计时器信号的回调函数,no是接收信号标号
 {
-  alarm(0);
-  setmap();
-  alarm(shezhi.jiange);
+  alarm(0);//关闭计时器,防止执行下面功能时计时器再次启动(不合理的shezhi.jiange?)
+  setmap();//调用map.cpp中的setmap()函数将缓存map中的数据存入sqlite数据库,清空缓存流量
+  alarm(shezhi.jiange);//重新开启计时器
 }
 
