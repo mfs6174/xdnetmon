@@ -21,6 +21,8 @@
  * along with XDnetmon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+//用到的库文件,每个源码文件都应当包含此文件
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
