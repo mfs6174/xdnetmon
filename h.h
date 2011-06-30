@@ -21,6 +21,10 @@
  * along with XDnetmon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+//本文件为各全局结构体等数据类型的定义
+//以及跨文件使用的函数的声明
+//每个其他源码文件都应该包含本头文件
+
 struct Shezhi//设置信息结构体
 {
   string dev;//设备名字符串
