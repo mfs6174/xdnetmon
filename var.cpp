@@ -23,7 +23,7 @@
 
 #include "include.h"
 #include "h.h"
-long long zonghe=0;
-Shezhi shezhi;
-map<string,D> hash;
+long long zonghe=0;//记录每次工作产生的外网流量总和
+Shezhi shezhi;//保存设置信息的结构体,其类型Shezhi在h.h中定义
+map<string,D> hash;//缓存map,第二维D在h.h中定义
 
