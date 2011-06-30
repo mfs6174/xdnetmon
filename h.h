@@ -21,18 +21,18 @@
  * along with XDnetmon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-struct Shezhi
+struct Shezhi//设置信息结构体
 {
-  string dev;
-  bool mode,zhiding,log;
-  long long  jiange,pian;
+  string dev;//设备名字符串
+  bool mode,zhiding,log;//工作模式等开关
+  long long  jiange,pian;//写数据库间隔和时间片的设置数值
 };
 
-struct D
+struct D //流量缓存中保存流量和时间信息的结构体
 {
-  long long liu,kai;
+  long long liu,kai;//liu为流量,kai为本记录的开始时刻
 };
-
+//以下为跨文件使用的函数的声明
 void pcapinit();
 void huidiao(u_char *a,const struct pcap_pkthdr *b,const u_char *c);
 int pushmap(const string &a,int b);
