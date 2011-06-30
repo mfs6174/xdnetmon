@@ -24,19 +24,19 @@
 #include "include.h"
 #include "h.h"
 
-const int _mb_=1024*1024,_kb_=1024,_gb_=_mb_*1024;
+const int _mb_=1024*1024,_kb_=1024,_gb_=_mb_*1024;//三个常量,分别为KB,MB,GB与字节的换算倍数
 
-double _kb(long long x)
+double _kb(long long x)//把字节换算为kb,x为字节,返回double为kb
 {
   return (double)x/_kb_;
 }
 
-double _mb(long long x)
+double _mb(long long x)//把字节换算为mb,x为字节,返回double为kb
 {
   return (double)x/_mb_;
 }
 
-double _gb(long long x)
+double _gb(long long x)//把字节换算为gb,x为字节,返回double为kb
 {
   return (double)x/_gb_;
 }
