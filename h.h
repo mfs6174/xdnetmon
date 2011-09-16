@@ -49,5 +49,6 @@ void sqlinit();
 void sqlexit();
 double _mb(long long x);
 double _kb(long long x);
+void dosnif(u_char *bao,bpf_u_int32 ip,u_char xieyi); 
    
 
