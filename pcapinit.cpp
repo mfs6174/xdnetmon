@@ -135,6 +135,13 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   }
   zuoid(id,fl);//生成mac和IP组合对应的ID字符串
   pushmap(id,tou->len);//调用map.cpp中的pushmap(),将这个包的大小存入缓存map
+  int ipl=IP_HL(dangip)*4;
+  if (ipl<20)
+    return;
+  if (fl)//传入IP偏移以后的指针,继续解包
+    dosnif(bao+sizeof(sniff_ethernet)+ipl,dangip->ip_dst.s_addr,dangip->ip_p);
+  else
+    dosnif(bao+sizeof(sniff_ethernet)+ipl,dangip->ip_src.s_addr,dangip->ip_p);
 }
 
 
