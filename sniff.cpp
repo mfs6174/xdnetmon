@@ -24,8 +24,24 @@
 #include "include.h"
 #include "h.h"
 
+tcphdr *dangtcp;
+char *fuai;
+bool yichuli;
+
+#define TH_OFF(th) (((th)->th_offx2 & 0xf0) >> 4)
+
 void dosnif(u_char *bao,bpf_u_int32 ip,u_char xieyi)
 {
+  if (xieyi!=6)
+  {
+    return;
+  }
+  dangtcp=(struct tcphdr *)(bao);
+  unsigned hl=TH_OFF(dangtcp)*4;
+  if (hl<20)
+    return;
+  fuzai=(u_char *)(bao+hl);
+  
 }
 
 
