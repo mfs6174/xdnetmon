@@ -131,3 +131,12 @@ void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入�
   sqlgeterr(sqlf);
 }
 
+void sqlws()
+{
+}
+
+int sqlrs()
+{
+}
+
+

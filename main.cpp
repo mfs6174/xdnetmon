@@ -25,11 +25,9 @@
 #include "h.h"
 extern Shezhi shezhi;
 extern pcap_t *pp;
-int main()
+int main(int argc, char *argv[])
 {
-  shezhi.dev="eth1";
-  shezhi.jiange=30;
-  shezhi.pian=300;
+  readset();
   signal(SIGHUP,tuichu);
   signal(SIGINT,tuichu);
   //signal(SIGKILL,tuichu);
