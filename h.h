@@ -31,7 +31,7 @@ struct Shezhi//设置信息结构体
   bool outmode,wat;//工作模式等开关
   long long  jiange,pian;//写数据库间隔和时间片的设置数值
 };
-
+b
 struct D //流量缓存中保存流量和时间信息的结构体
 {
   long long liu,kai;//liu为流量,kai为本记录的开始时刻

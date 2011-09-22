@@ -27,7 +27,6 @@ extern Shezhi shezhi;
 extern pcap_t *pp;
 int main()
 {
-  shezhi.zhiding=true;
   shezhi.dev="eth1";
   shezhi.jiange=30;
   shezhi.pian=300;
