@@ -52,6 +52,10 @@ void sqlinit() //sql数据库初始化,打开或新建数据库,如果新建,新
   //表名:speed 表结构: mac ip为字符串,rate为浮点数,单位是字节/秒,end为本速度区间的结束时刻,unix时间戳表示
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
+  yuju="CREATE TABLE IF NOT EXISTS settings ( dev TEXT,outmode INT,wat INT,jiange INT,pian INT);";
+  //表名:settings 设置信息
+  sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
+  sqlgeterr(sqlf);
 }
 
 void sqlexit()//sql退出处理,关闭连接,释放内存
