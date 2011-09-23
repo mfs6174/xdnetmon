@@ -25,7 +25,7 @@
 #include "h.h"
 extern Shezhi shezhi;
 extern pcap_t *pp;
-bool fl_xsz,fl_dym;
+bool fl_xsz,fl_dym,fl_zd,fl_hp;
 
 int main(int argc, char *argv[])
 {
@@ -38,6 +38,59 @@ int main(int argc, char *argv[])
   signal(SIGALRM,timer);
   sqlinit();
   readset();
+  int oc;
+  string tp;
+  while((oc=getopt(argc,argv,"d:i:t:o:wsph"))!=-1)
+  {
+    switch(oc)
+    {
+    case 'd':
+      tp=optarg;
+      setset(1,string(opa));
+      fl_zd=true;
+      break;
+    case 'i':
+      tp=optarg;
+      setset(4,string(opa));
+      break;
+    case 't':
+      tp=optarg;
+      setset(5,string(opa));
+      break;
+    case 'o':
+      tp=optarg;
+      setset(2,string(opa));
+      break;
+    case 'w':
+      setset(3,"1");
+      break;
+    case 's':
+      fl_xsz=true;
+      break;
+    case 'p':
+      fl_dym=true;
+      break;
+    case 'h':
+      fl_hp=true;
+      break;
+    case '?':
+      cout<<"命令参数错误,程序结束"<<enl;
+      tuichu(-1);
+      break;
+    }
+  }
+  if (fl_hp)
+  {
+    pfhelp();
+    exit(0);
+  }
+  if (fl_xsz)
+    writeset();
+  if (fl_dym)
+  {
+    itof();
+    exit(0);
+  }
   pcapinit();
   alarm(shezhi.jiange);
   pcap_loop(pp,-1,huidiao,NULL);

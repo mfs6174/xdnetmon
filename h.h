@@ -52,4 +52,7 @@ double _kb(long long x);
 void sqlws();
 int sqlrs();
 long long val(const string &x);   
+void setset(int ,string );
+void readset();
+void writeset();
 
