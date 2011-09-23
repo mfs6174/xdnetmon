@@ -51,5 +51,5 @@ double _mb(long long x);
 double _kb(long long x);
 void sqlws();
 int sqlrs();
-   
+long long val(const string &x);   
 

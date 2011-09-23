@@ -25,9 +25,10 @@
 #include "h.h"
 extern Shezhi shezhi;
 extern pcap_t *pp;
+bool fl_xsz,fl_dym;
+
 int main(int argc, char *argv[])
 {
-  readset();
   signal(SIGHUP,tuichu);
   signal(SIGINT,tuichu);
   //signal(SIGKILL,tuichu);
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
   //signal(SIGTSTP,tuichu);
   signal(SIGALRM,timer);
   sqlinit();
+  readset();
   pcapinit();
   alarm(shezhi.jiange);
   pcap_loop(pp,-1,huidiao,NULL);

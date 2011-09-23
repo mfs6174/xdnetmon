@@ -52,7 +52,7 @@ void sqlinit() //sql数据库初始化,打开或新建数据库,如果新建,新
   //表名:speed 表结构: mac ip为字符串,rate为浮点数,单位是字节/秒,end为本速度区间的结束时刻,unix时间戳表示
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
-  yuju="CREATE TABLE IF NOT EXISTS settings ( dev TEXT,outmode INT,wat INT,jiange INT,pian INT);";
+  yuju="CREATE TABLE IF NOT EXISTS conf ( dev TEXT,outmode INT,wat INT,jiange INT,pian INT);";
   //表名:settings 设置信息
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
@@ -72,11 +72,26 @@ string str(long long x)//长整形转为字符串,用于构造sql语句串
     return t.str();
 }
 
+string str(int x)//长整形转为字符串,用于构造sql语句串
+{
+    ostringstream t;
+    t<<x;
+    return t.str();
+}
+
 string str(double x)//浮点数转为字符串,构造sql语句用
 {
   ostringstream t;
   t<<x;
   return t.str();
+}
+
+long long val(const string &x)//转换字符串为长整形
+{
+    istringstream t(x);
+    long long  r;
+    t>>r;
+    return r;
 }
 
 string getmac(const string &ss)//在id串中提取mac地址部分 ss是构造好的ID串,返回mac字符串
@@ -133,10 +148,30 @@ void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入�
 
 void sqlws()
 {
+  yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(wat)+",jiange="+str(jiange)+",pian="+str(pian);
+  sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
+  sqlgeterr(sqlf);
 }
 
 int sqlrs()
 {
+  char **jieguo=NULL;
+  int hang=0,lie=0;
+  yuju="SELECT * FROM conf";
+  sqlf=sqlite3_get_table(db,yuju.c_str(),&jieguo,&hang,&lie,&sqlerr);
+  if (hang<1)
+  {
+    if (jieguo!=NULL)
+      sqlite3_free_table(jieguo);
+    sqlgeterr(sqlf);
+    return -1;
+  }
+  shezhi.dev=jieguo[lie];
+  shezhi.outmode=val(string(jieguo[lie+1]));
+  shezhi.wat=val(string(jieguo[lie+2]));
+  shezhi.jiange=val(string(jieguo[lie+3]));
+  shezhi.pian=val(string(jieguo[lie+4]));
+  return 0;
 }
 
 

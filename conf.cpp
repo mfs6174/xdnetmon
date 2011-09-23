@@ -55,6 +55,12 @@ void checkset(bool re=0)
     pian=0;
 }
 
+void writeset()
+{
+  checkset(0);
+  sqlws();
+}
+
 void readset()
 {
   int sta;
@@ -62,17 +68,41 @@ void readset()
   if (sta==0)
     checkset(0);
   else
+  {
     checkset(1);
-}
-
-void writeset()
-{
-  checkset(0);
-  sqlws();
+    writeset();
+  }
 }
 
 void setset(int n,string v)
 {
-  
+  static bool isstr[10]={0,1,0};
+  if (isstr[n])
+  {
+    switch(n)
+    {
+    case 1:
+      shezhi.dev=v;
+      break;
+    }
+  }
+  else
+  {
+    switch(n)
+    {
+    case 2:
+      shezhi.outmode=val(v);
+      break;
+    case 3:
+      shezhi.wat=val(v);
+      break;
+    case 4:
+      shezhi.jiange=val(v);
+      break;
+    case 5:
+      shezhi.pian=val(v);
+      break;
+    }
+  }
   checkset(0);
 }
