@@ -55,4 +55,5 @@ long long val(const string &x);
 void setset(int ,string );
 void readset();
 void writeset();
-
+void pfhelp();
+void itof();
