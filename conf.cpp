@@ -23,7 +23,7 @@
 
 #include "include.h"
 #include "h.h"
-char ebuf[PCAP_ERRBUF_SIZE];
+extern char ebuf[PCAP_ERRBUF_SIZE];
 extern Shezhi shezhi;
 
 void checkset(bool re=0)
@@ -31,28 +31,28 @@ void checkset(bool re=0)
   if (re)
   {
     ebuf[0]=0;
-    dev=pcap_lookupdev(ebuf);
+    shezhi.dev=pcap_lookupdev(ebuf);
     if (strlen(ebuf)>0)
-      dev="eth1";
-    outmode=0;
-    wat=0;
-    jiange=30;
-    pian=600;
+      shezhi.dev="eth1";
+    shezhi.outmode=0;
+    shezhi.wat=0;
+    shezhi.jiange=30;
+    shezhi.pian=600;
     return;
   }
   ebuf[0]=0;
-  if (dev.size()<1)
-    dev=pcap_lookupdev(ebuf);
+  if (shezhi.dev.size()<1)
+    shezhi.dev=pcap_lookupdev(ebuf);
   if (strlen(ebuf)>0)
-    dev="eth1";
-  if (outmode>2)
-    outmode=0;
-  if (wat>1)
-    wat=0;
-  if (jiange<1)
-    jiange=1;
-  if (pian<10)
-    pian=0;
+    shezhi.dev="eth1";
+  if (shezhi.outmode>2)
+    shezhi.outmode=0;
+  if (shezhi.wat>1)
+    shezhi.wat=0;
+  if (shezhi.jiange<1)
+    shezhi.jiange=1;
+  if (shezhi.pian<10)
+    shezhi.pian=0;
 }
 
 void writeset()

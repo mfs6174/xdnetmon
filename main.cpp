@@ -46,20 +46,20 @@ int main(int argc, char *argv[])
     {
     case 'd':
       tp=optarg;
-      setset(1,string(opa));
+      setset(1,tp);
       fl_zd=true;
       break;
     case 'i':
       tp=optarg;
-      setset(4,string(opa));
+      setset(4,tp);
       break;
     case 't':
       tp=optarg;
-      setset(5,string(opa));
+      setset(5,tp);
       break;
     case 'o':
       tp=optarg;
-      setset(2,string(opa));
+      setset(2,tp);
       break;
     case 'w':
       setset(3,"1");
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
       fl_hp=true;
       break;
     case '?':
-      cout<<"命令参数错误,程序结束"<<enl;
+      cout<<"命令参数错误,程序结束"<<endl;
       tuichu(-1);
       break;
     }
