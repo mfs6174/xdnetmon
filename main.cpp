@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
   if (fl_dym)
   {
     itof();
+    sqlexit();
     exit(0);
   }
   pcapinit();

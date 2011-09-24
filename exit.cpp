@@ -43,7 +43,8 @@ void tuichu(int s)//正常退出的处理函数,s为状态
   if (ct=='y'||ct=='Y')
   {
     //用户确认退出,执行与上面错误退出一样的退出过程
-    pcap_close(pp);
+    if (pp!=NULL)
+      pcap_close(pp);
     alarm(0);
     setmap();//在关闭sqlite连接之前,可能位于两次数据库操作中间,所以最后一次清空缓存,写入数据库,防止流量丢失
     sqlexit();

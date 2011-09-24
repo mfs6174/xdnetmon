@@ -157,7 +157,7 @@ int sqlrs()
 {
   char **jieguo=NULL;
   int hang=0,lie=0;
-  yuju="SELECT * FROM conf";
+  yuju="SELECT * FROM conf;";
   sqlf=sqlite3_get_table(db,yuju.c_str(),&jieguo,&hang,&lie,&sqlerr);
   if (hang<1)
   {
@@ -171,7 +171,17 @@ int sqlrs()
   shezhi.wat=val(string(jieguo[lie+2]));
   shezhi.jiange=val(string(jieguo[lie+3]));
   shezhi.pian=val(string(jieguo[lie+4]));
+  if (jieguo!=NULL)
+    sqlite3_free_table(jieguo);
   return 0;
 }
 
+char ** sqlqr(const string &s,int &hang,int &lie)
+{
+  char **jieguo=NULL;
+  hang=0,lie=0;
+  sqlf=sqlite3_get_table(db,s.c_str(),&jieguo,&hang,&lie,&sqlerr);
+  sqlgeterr(sqlf);
+  return jieguo;
+}
 

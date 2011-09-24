@@ -42,7 +42,8 @@ void checkset(bool re=0)
   }
   ebuf[0]=0;
   if (shezhi.dev.size()<1)
-    shezhi.dev=pcap_lookupdev(ebuf);
+     shezhi.dev=pcap_lookupdev(ebuf);
+    // shezhi.dev="eth0";
   if (strlen(ebuf)>0)
     shezhi.dev="eth1";
   if (shezhi.outmode>2)

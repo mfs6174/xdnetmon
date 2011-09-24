@@ -56,3 +56,4 @@ void readset();
 void writeset();
 void pfhelp();
 void itof();
+char ** sqlqr(const string &,int &,int &);
