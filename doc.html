@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>doc</title>
+    <meta name="generator" content="muse.el">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8">
+    <style type="text/css">
+body {
+  background: white; color: black;
+  margin-left: 3%; margin-right: 7%;
+}
+
+p { margin-top: 1% }
+p.verse { margin-left: 3% }
+
+.example { margin-left: 3% }
+
+h2 {
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+h3 { margin-bottom: 0px; }
+    </style>
+  </head>
+  <body>
+    <h1>doc</h1>
+    <!-- Page published by Emacs Muse begins here -->
+<h2>XDNetmon的文档——一个用于linux网关的基于抓包分析的流量统计和分析监视软件</h2>
+
+<h3>总概述</h3>
+
+<p class="first">本软件是用于linux网关的抓包分析和统计监视软件。为了解决实验室内网各计算机流量使用和网络浏览情况难以管理控制的情况，设计了一个可以在网关上长时间运行的监视统计软件。使用libpcap库完成网络操作和抓包，解包后统计数据包的协议，来源和去向，进行记录以达到对网关内计算机分别进行流量统计。在抓包时可以通过过滤器过滤掉西电内网的数据包，只分析外网的流量。统计信息使用跨平台移植方便的小型数据库sqlite3进行保存和查询。同时解包后可以将数据负载中ASCII数据内容压入“AC自动机”进行多模式字符串匹配，寻找敏感内容进行分析监视。本软件运行于命令行，可以通过参数控制设置和进行交互式查询输出。相比大型的网络分析软件，本软件简洁可靠，同时保持较好的效率。</p>
+
+
+<h3>系统设计概述</h3>
+
+<h4>整体结构</h4>
+
+<p class="first">系统初始化，处理命令行参数和系统信号，等待抓包中断&mdash;&gt;libpcap抓取数据包进行中断&mdash;&gt;解析数据包，分析是否需要内容模式匹配
+<center>
+<p>&mdash;&gt;将统计数据存入缓存
+&mdash;&gt;解析出ASCII负载 压入AC自动机进行匹配&mdash;&gt;存储结果
+&mdash;&gt;计时中断&mdash;&gt;将缓存写入数据库</p>
+</center>
+
+
+<h4>模块分布</h4>
+
+<ul>
+<li>主模块：处理参数和信号，开启中断</li>
+<li>pcap模块：控制网络，抓取数据包触发中断</li>
+<li>缓存模块：保存数据</li>
+<li>数据库模块：与数据库交互</li>
+<li>交互模块:与用户交互和输出查询结果</li>
+<li>匹配分析模块：分析数据内容</li>
+</ul>
+
+
+<h4>技术和实现</h4>
+
+<p class="first">linux系统交互：使用标准linux系统库，与系统参数和信号进行交互。
+数据包抓取技术：开源的libpcap库从内核网络栈抓取数据
+网络数据包解析：数据偏移量(offset)分析方法
+缓存技术：STL库map容器，内部采用红黑树算法进行快速存取
+时间片技术：在一个时间内不读写文件，对数据保存采用时间戳检查的技术进行分片保存
+模式匹配技术：AC自动机算法进行快速多模式匹配</p>
+
+
+
+<h3>详细设计概述</h3>
+
+<h4>主模块main.cpp timer.cpp exit.cpp</h4>
+
+<p class="first">1.捕获系统信号，防止软件以外退出。2.初始化数据库模块，读取设置 3.解析命令行参数，修改设置，调用交互模块 4.初始化网络抓包模块 5.开启系统计时器进行定时中断。6.开启抓包中断，等待中断</p>
+
+<p>本模块作为中心模块，与除缓存模块以外的所有模块进行交互</p>
+
+
+<h4>pcap模块 pcapinit.cpp</h4>
+
+<p class="first">1.初始化，编译过滤表达式，获得设备句柄 2.定义回调函数，即中断调用的函数，函数负责解析数据包中的来源和去向mac和ip地址3.调用缓存模块和匹配模块</p>
+
+
+<h4>缓存模块 map.cpp</h4>
+
+<p class="first">1.初始化缓存map容器 2.扫描map，如果存在同关键字的记录，则更新，否则增加新记录 3.被计时中断调用的函数，调用数据库模块把缓存内容更新进数据库，清空缓存。</p>
+
+
+<h4>数据库模块 sql.cpp</h4>
+
+<p class="first">1.打开数据库，检查是否存在结构，如果不存在，新建需要的结构2.写入网络速度信息3.检查时间片内是否存在流量记录，新增或更新记录4.读取写入设置信息5.对数据库操作进行异常处理</p>
+
+
+<h4>交互模块 inteactive.cpp conf.cpp</h4>
+
+<p class="first">1.打印帮助信息2.输出查询结果到文件3.检查设置信息有效性4.解析交互命令，进行结果查询和输出</p>
+
+
+<h4>匹配分析模块</h4>
+
+<p class="first">1.读入要匹配的模式串，初始化AC自动机 2.处理数据流.</p>
+
+
+
+<h3>实际使用测试</h3>
+
+<p class="first">本软件在ACM实验室经过了半年的使用，效果良好，配合linux下shell脚本，可以方便进行系统管理。因为可以输出结果到网页，可以直接远程查看结果。可以清楚的记录每台计算机的流量使用情况，性能良好，在100M交换环境下CPU占用率&lt;10%，准确度90%以上。</p>
+
+
+<h3>详细实现原理见代码注释 使用netmon -h 输出帮助信息</h3>
+
+
+
+
+<!-- Page published by Emacs Muse ends here -->
+  </body>
+</html>
