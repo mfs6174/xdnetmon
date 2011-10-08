@@ -28,7 +28,7 @@
 #define CH 63 //分支数
 
 tcphdr *dangtcp;
-char *fuzai;
+u_char *fuzai;
 bool yichuli;
 
 int cc,c,cp;//cc是统计使用了多少个节点
@@ -146,7 +146,7 @@ string str(long long x)//长整形转为字符串,用于构造sql语句串
 
 void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi)
 {
-  if ((xieyi!=6)||(!shezhi.wat))
+  if ((xieyi!=6))
   {
     return;
   }
@@ -160,7 +160,7 @@ void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi)
   {
     long long t=time(NULL);
     string fname="data"+str(t);
-    ofstream ouf(fname,ios_base::app);
+    ofstream ouf(fname.c_str(),ios_base::app);
     ouf<<fuzai<<endl;
   }
 }
