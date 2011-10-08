@@ -163,13 +163,6 @@ bool com(u_char *s) //查找每个模式串出现的次数
   return false;
 }
 
-string str(long long x)//长整形转为字符串,用于构造sql语句串
-{
-    ostringstream t;
-    t<<x;
-    return t.str();
-}
-
 void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi)
 {
   if ((xieyi!=6))

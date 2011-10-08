@@ -60,4 +60,5 @@ void itof();
 char ** sqlqr(const string &,int &,int &);
 void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi);
 void acinit();
+string str(long long x);
 
