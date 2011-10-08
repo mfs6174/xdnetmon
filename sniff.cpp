@@ -144,7 +144,7 @@ string str(long long x)//长整形转为字符串,用于构造sql语句串
     return t.str();
 }
 
-void dosnif(u_char *bao,bpf_u_int32 ip,u_char xieyi)
+void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi)
 {
   if ((xieyi!=6)||)
   {

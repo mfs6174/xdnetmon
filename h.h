@@ -58,5 +58,6 @@ void writeset();
 void pfhelp();
 void itof();
 char ** sqlqr(const string &,int &,int &);
-void dosnif(u_char *bao,bpf_u_int32 ip,u_char xieyi);
+void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi);
+void acinit();
 

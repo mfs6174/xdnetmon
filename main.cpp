@@ -94,6 +94,8 @@ int main(int argc, char *argv[])
   }
   pcapinit();
   alarm(shezhi.jiange);
+  if (shezhi.wat)
+    acinit();
   pcap_loop(pp,-1,huidiao,NULL);
   return 0;
 }
