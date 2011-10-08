@@ -31,7 +31,7 @@ tcphdr *dangtcp;
 char *fuai;
 bool yichuli;
 
-int cc,c;//cc是统计使用了多少个节点
+int cc,c,cp;//cc是统计使用了多少个节点
 int zh[NODE][CH];//自动机机体
 int shu[NODE];//相应节点的数据域
 int fail[NODE];//失败指针，貌似是指向［彻底］失败的位置
@@ -39,6 +39,7 @@ int sn[300];//每个字符的代号，无效字符是0
 int q[NODE];//队列
 char pat[1000][1000];
 
+void ins(char *s, int d);
 
 void init() //每次都要先执行
 {
@@ -61,10 +62,14 @@ void init() //每次都要先执行
   }
   ifstream inf("pat.txt");
   i=1;
-  while (inf>>
+  while (inf>>pat[i])
+    i++;
+  cp=i-1;
   fail[0]=0;
   memset(zh[0],0,sizeof(zh[0]));
   cc=0;
+  for (i=1;i<=cp;i++)
+    ins(pat[i],i);
 }
 
 void ins(char *s, int d) //建立trie
@@ -111,7 +116,7 @@ void acinit()//自动机初始化，执行完以后zh里就是goto或fail的位�
   }
 }
 
-void com(char *s) //查找每个模式串出现的次数
+bool com(char *s) //查找每个模式串出现的次数
 {
   int p=0;
   for (;*s;s++)
@@ -122,17 +127,26 @@ void com(char *s) //查找每个模式串出现的次数
     {
       if (shu[t])
       {
+        return true;
       }
       t=fail[t];
     }
   }
+  return false;
 }
 
 #define TH_OFF(th) (((th)->th_offx2 & 0xf0) >> 4)
 
+string str(long long x)//长整形转为字符串,用于构造sql语句串
+{
+    ostringstream t;
+    t<<x;
+    return t.str();
+}
+
 void dosnif(u_char *bao,bpf_u_int32 ip,u_char xieyi)
 {
-  if (xieyi!=6)
+  if ((xieyi!=6)||)
   {
     return;
   }
@@ -141,7 +155,14 @@ void dosnif(u_char *bao,bpf_u_int32 ip,u_char xieyi)
   if (hl<20)
     return;
   fuzai=(u_char *)(bao+hl);
-  com(fuzai);
+  bool fl=com(fuzai);
+  if (fl)
+  {
+    long long t=time(NULL);
+    string fname="data"+str(t);
+    ofstream ouf(fname);
+    ouf<<fuzai<<endl;
+  }
 }
 
 
