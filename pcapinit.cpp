@@ -117,6 +117,13 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   bool fl=false;
   static bpf_u_int32 pan=net&mask;//静态变量,判定标志,即内网的掩码和IP段的按位与
   dangeth=(struct sniff_ethernet *)(bao);//强制转换数据块指针为以太头指针,即取最前的一块数据对应以太头的结构
+  if ( ((dangeth->ether_type)==0x0806)||((dangeth->ether_type)==0x8035))
+  {
+    //doarp(bao);//准备对arp和rarp包进行处理,函数未编写
+    return;
+  }
+  if ( (dangeth->ether_type)!=0x0800)//抛弃非IP包
+    return;
   dangip=(struct sniff_ip *)(bao+sizeof(sniff_ethernet));//强制转换数据块指针加上以太头的偏移量为IP头
   if (((dangip->ip_src.s_addr)&mask)==pan)//卧槽,这个==前不加括号就他喵的不对,这是神马神运算顺序!//于是判断哪个方向是内网,设置传送给zuoid()的fl
   {
@@ -128,6 +135,15 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   }
   zuoid(id,fl);//生成mac和IP组合对应的ID字符串
   pushmap(id,tou->len);//调用map.cpp中的pushmap(),将这个包的大小存入缓存map
+  int ipl=IP_HL(dangip)*4;
+  if (ipl<20)
+    return;
+  if (!shezhi.wat)
+    return;
+  if (fl)//传入IP偏移以后的指针,继续解包
+    dosnif(bao+sizeof(sniff_ethernet)+ipl,dangip->ip_dst.s_addr,dangip->ip_p);
+  else
+    dosnif(bao+sizeof(sniff_ethernet)+ipl,dangip->ip_src.s_addr,dangip->ip_p);
 }
 
 
