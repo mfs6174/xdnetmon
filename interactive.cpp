@@ -118,6 +118,7 @@ void itof()
       cin>>ss;
     }
     prout(fmac,mac,fip,ip,fbt,bt,fet,et,vb);
+    //prout(false,'s',false,'s',false,1,false,1,false);
   }
 }
 
