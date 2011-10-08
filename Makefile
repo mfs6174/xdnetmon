@@ -17,6 +17,8 @@ timer.o: timer.cpp include.h h.h
 	g++ -g -o timer.o -c timer.cpp
 hunman.o: hunman.cpp include.h h.h
 	g++ -g -o hunman.o -c hunman.cpp
+snifer.o: snifer.cpp include.h h.h
+	g++ -g -o snifer.o -c snifer.cpp
 clean:
 	rm -f *.o
 
