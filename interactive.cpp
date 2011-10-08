@@ -63,7 +63,7 @@ void prout(bool fmac,string &mac,bool fip,string &ip,bool fbt,string &bt,bool fe
   csql+=" GROUP BY mac;";
   int ii=0,i,j,hang=0,lie=0;
   rr=sqlqr(csql,hang,lie);
-  string html="<html> <head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /> <link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"css/style.css\" /> <title>netmon result</title> </head> <body> <table> <tr>";
+  string html="<html> <head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /> <meta http-equiv=\"Refresh\" content=\"2;url=result.html\"><link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"css/style.css\" /> <title>netmon result</title> </head> <body> <table> <tr>";
   for (i=1;i<=lie;i++)
     html+="<td>"+string(rr[ii++])+"</td>";
   for (i=1;i<=hang;i++)
