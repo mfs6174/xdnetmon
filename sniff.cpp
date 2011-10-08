@@ -23,7 +23,7 @@
 
 #include "include.h"
 #include "h.h"
-
+typedef u_int tcp_seq;
 struct stcphdr
   {
     u_int16_t th_sport;		/* source port */
