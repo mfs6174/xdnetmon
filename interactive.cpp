@@ -41,7 +41,7 @@ void pfhelp()
   cout<<"按顺序输入或不输入:查询指定MAC 查询指定IP 指定时间范围 显示详细记录(否则显示总和) 显示速度"<<endl;
 }
 
-void prout(bool fmac,string &mac,bool fip,string &ip,bool fbt,string &bt,bool fet,string &et,bool vb)
+void prout(bool fmac,string mac,bool fip,string ip,bool fbt,string bt,bool fet,string et,bool vb)
 {
   string csql;
   char **rr=NULL;

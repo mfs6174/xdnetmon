@@ -36,7 +36,7 @@ struct D //流量缓存中保存流量和时间信息的结构体
   long long liu,kai;//liu为流量,kai为本记录的开始时刻
 };
 //以下为跨文件使用的函数的声明
-void prout(bool fmac,string &mac,bool fip,string &ip,bool fbt,string &bt,bool fet,string &et,bool vb);
+void prout(bool fmac,string mac,bool fip,string ip,bool fbt,string bt,bool fet,string et,bool vb);
 void pcapinit();
 void huidiao(u_char *a,const struct pcap_pkthdr *b,const u_char *c);
 int pushmap(const string &a,int b);
