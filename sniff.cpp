@@ -28,7 +28,7 @@
 #define CH 63 //分支数
 
 tcphdr *dangtcp;
-char *fuai;
+char *fuzai;
 bool yichuli;
 
 int cc,c,cp;//cc是统计使用了多少个节点
@@ -77,7 +77,7 @@ void ins(char *s, int d) //建立trie
   int p=0;
   for(;*s;s++)
   {
-    int t=sn[*a];
+    int t=sn[*s];
     if(!zh[p][t])
     {
       cc++;
@@ -135,7 +135,7 @@ bool com(char *s) //查找每个模式串出现的次数
   return false;
 }
 
-#define TH_OFF(th) (((th)->th_offx2 & 0xf0) >> 4)
+#define TH_OFF(th) (((th)->th_off & 0xf0) >> 4)
 
 string str(long long x)//长整形转为字符串,用于构造sql语句串
 {
@@ -146,7 +146,7 @@ string str(long long x)//长整形转为字符串,用于构造sql语句串
 
 void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi)
 {
-  if ((xieyi!=6)||)
+  if ((xieyi!=6)||(!shezhi.wat))
   {
     return;
   }
