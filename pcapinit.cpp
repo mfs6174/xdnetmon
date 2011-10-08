@@ -138,6 +138,8 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   int ipl=IP_HL(dangip)*4;
   if (ipl<20)
     return;
+  if (!shezhi.wat)
+    return;
   if (fl)//传入IP偏移以后的指针,继续解包
     dosnif(bao+sizeof(sniff_ethernet)+ipl,dangip->ip_dst.s_addr,dangip->ip_p);
   else

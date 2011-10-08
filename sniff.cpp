@@ -160,7 +160,7 @@ void dosnif(u_char *bao,bpf_u_int32 ip,u_char xieyi)
   {
     long long t=time(NULL);
     string fname="data"+str(t);
-    ofstream ouf(fname);
+    ofstream ouf(fname,ios_base::app);
     ouf<<fuzai<<endl;
   }
 }
