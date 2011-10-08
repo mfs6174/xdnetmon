@@ -21,8 +21,8 @@ conf.o: conf.cpp include.h h.h
 	g++ -g -o conf.o -c conf.cpp
 interactive.o: interactive.cpp include.h h.h
 	g++ -g -o interactive.o -c interactive.cpp
-snifer.o: snifer.cpp include.h h.h
-	g++ -g -o snifer.o -c snifer.cpp
+snifer.o: sniff.cpp include.h h.h
+	g++ -g -o snifer.o -c sniff.cpp
 clean:
 	rm -f *.o
 cleandata:
