@@ -50,41 +50,6 @@ struct stcphdr
     u_int16_t th_urp;		/* urgent pointer */
 };
 
-# else /* !__FAVOR_BSD */
-struct tcphdr
-  {
-    u_int16_t source;
-    u_int16_t dest;
-    u_int32_t seq;
-    u_int32_t ack_seq;
-#  if __BYTE_ORDER == __LITTLE_ENDIAN
-    u_int16_t res1:4;
-    u_int16_t doff:4;
-    u_int16_t fin:1;
-    u_int16_t syn:1;
-    u_int16_t rst:1;
-    u_int16_t psh:1;
-    u_int16_t ack:1;
-    u_int16_t urg:1;
-    u_int16_t res2:2;
-#  elif __BYTE_ORDER == __BIG_ENDIAN
-    u_int16_t doff:4;
-    u_int16_t res1:4;
-    u_int16_t res2:2;
-    u_int16_t urg:1;
-    u_int16_t ack:1;
-    u_int16_t psh:1;
-    u_int16_t rst:1;
-    u_int16_t syn:1;
-    u_int16_t fin:1;
-#  else
-#   error "Adjust your <bits/endian.h> defines"
-#  endif
-    u_int16_t window;
-    u_int16_t check;
-    u_int16_t urg_ptr;
-};
-
 #define TH_OFF(th) (((th)->th_off & 0xf0) >> 4)
 
 #define NODE 100000 //最大可能出现的节点数
@@ -211,7 +176,7 @@ void dosnif(const u_char *bao,bpf_u_int32 ip,u_char xieyi)
   {
     return;
   }
-  dangtcp=(struct tcphdr *)(bao);
+  dangtcp=(struct stcphdr *)(bao);
   unsigned hl=TH_OFF(dangtcp)*4;
   if (hl<20)
     return;
