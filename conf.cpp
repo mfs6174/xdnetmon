@@ -38,6 +38,7 @@ void checkset(bool re=0)
     shezhi.wat=0;
     shezhi.jiange=30;
     shezhi.pian=600;
+    shezhi.nostd=0;
     return;
   }
   ebuf[0]=0;
@@ -48,12 +49,14 @@ void checkset(bool re=0)
     shezhi.dev="eth1";
   if (shezhi.outmode>2)
     shezhi.outmode=0;
-  if (shezhi.wat>1)
+  if (shezhi.wat>1||shezhi.wat<0)
     shezhi.wat=0;
   if (shezhi.jiange<1)
     shezhi.jiange=1;
   if (shezhi.pian<10)
     shezhi.pian=0;
+  if (shezhi.nospd<0||shezhi.nospd>1)
+    shezhi.nospd=0;
 }
 
 void writeset()
@@ -102,6 +105,9 @@ void setset(int n,string v)
       break;
     case 5:
       shezhi.pian=val(v);
+      break;
+    case 6:
+      shezhi.nospd=val(v);
       break;
     }
   }

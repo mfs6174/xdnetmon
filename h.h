@@ -28,7 +28,7 @@
 struct Shezhi//设置信息结构体
 {
   string dev;//设备名字符串
-  int outmode,wat;//工作模式等开关
+  int outmode,wat,nospd;//工作模式等开关
   long long  jiange,pian;//写数据库间隔和时间片的设置数值
 };
 struct D //流量缓存中保存流量和时间信息的结构体

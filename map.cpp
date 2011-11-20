@@ -23,7 +23,7 @@
 
 #include "include.h"
 #include "h.h"
-
+extern Shezhi shezhi;
 
 extern map<string,D> hash; //var.cpp 中的全局变量,缓存,在两次数据库操作之间存储流量,first是ID字符串,second是保存起始时间和流量的结构体
 extern long long zonghe; //var.cpp中的全局变量,保存工作期间的总流量
@@ -57,7 +57,8 @@ int setmap() //每次定时器调用的将缓存数据写入数据库,并且清�
     (*i).second.liu=0;//清空记录中的
     zonghe+=tmp;//增加流量总和
     sqlflow((*i).first,tmp,(*i).second.kai,t);//调用sql.cpp中的sqlflow函数向数据库存储流量
-    sqlspeed((*i).first,tmp,t);//调用sql.cpp中的sqlspeed函数向数据库中存储速度信息
+    if (!shezhi.nospd)
+      sqlspeed((*i).first,tmp,t);//调用sql.cpp中的sqlspeed函数向数据库中存储速度信息
     (*i).second.kai=t;//将缓存中记录的开始时间修改成当前时间
     i++;
   }
