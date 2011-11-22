@@ -33,6 +33,7 @@ void pfhelp()
   cout<<"-o 1,2,3输出模式 屏幕输出(默认) html网页 csv表格"<<endl;
   cout<<"-i 秒数 指定写数据库的频率 默认为30s"<<endl;
   cout<<"-t 秒数 指定流量记录的时间片宽度 时间片内的流量只计算总量 单位秒 默认600s"<<endl;
+  cout<<"-n 关闭速度记录 减小数据库存储空间占用"<<endl;
   cout<<"-s 保存设置 否则参数只对本次运行有效"<<endl;
   cout<<"-h 打印本帮助信息"<<endl;
   cout<<"-p 进入交互打印结果模式"<<endl<<endl;

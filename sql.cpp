@@ -30,6 +30,10 @@ int sqlf;//sql执行结果
 string yuju;//存放执行语句
 extern Shezhi shezhi;//var.cpp中的全局变量,设置
 
+/*
+ *如果修改或添加设置项 需要在本文件中修改 sqlinit sqlrs sqlws函数
+ */
+
 void sqlgeterr(int s) //sql错误处理,判断是否出错,参数s为sql执行状态,输出错误信息,每次执行完sql语句调用一次
 {
   if (s) //如果返回的不是sql正常
@@ -52,7 +56,7 @@ void sqlinit() //sql数据库初始化,打开或新建数据库,如果新建,新
   //表名:speed 表结构: mac ip为字符串,rate为浮点数,单位是字节/秒,end为本速度区间的结束时刻,unix时间戳表示
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
-  yuju="CREATE TABLE IF NOT EXISTS conf ( dev TEXT,outmode INT,wat INT,jiange INT,pian INT);";
+  yuju="CREATE TABLE IF NOT EXISTS conf ( dev TEXT,outmode INT,wat INT,jiange INT,pian INT,nospd INT);";
   //表名:settings 设置信息
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
@@ -148,7 +152,7 @@ void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入�
 
 void sqlws()
 {
-  yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(shezhi.wat)+",jiange="+str(shezhi.jiange)+",pian="+str(shezhi.pian);
+  yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(shezhi.wat)+",jiange="+str(shezhi.jiange)+",pian="+str(shezhi.pian)+",nospd="+str(shezhi.nospd);
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
 }
@@ -171,6 +175,7 @@ int sqlrs()
   shezhi.wat=val(string(jieguo[lie+2]));
   shezhi.jiange=val(string(jieguo[lie+3]));
   shezhi.pian=val(string(jieguo[lie+4]));
+  shezhi.nospd=val(string(jieguo[lie+5]));
   if (jieguo!=NULL)
     sqlite3_free_table(jieguo);
   return 0;
