@@ -38,7 +38,7 @@ void checkset(bool re=0)
     shezhi.wat=0;
     shezhi.jiange=30;
     shezhi.pian=600;
-    shezhi.nostd=0;
+    shezhi.nospd=0;
     return;
   }
   ebuf[0]=0;
