@@ -24,7 +24,7 @@
 #include "include.h"
 #include "h.h"
 #define ETHER_ADDR_LEN 6
-const int changdu=2000;//抓包最大的长度,期望减少复制工作,增加效率
+const int changdu=60;//抓包最大的长度,期望减少复制工作,增加效率
 const int Ethchangdu=14; //以太头长度
 char ebuf[PCAP_ERRBUF_SIZE];//错误信息缓冲
 /*
