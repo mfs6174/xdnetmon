@@ -39,6 +39,8 @@ void checkset(bool re=0)
     shezhi.jiange=30;
     shezhi.pian=600;
     shezhi.nospd=0;
+    shezhi.dff=1;
+    shezhi.ftfile.clear();
     return;
   }
   ebuf[0]=0;
@@ -57,6 +59,8 @@ void checkset(bool re=0)
     shezhi.pian=0;
   if (shezhi.nospd<0||shezhi.nospd>1)
     shezhi.nospd=0;
+  if (shezhi.dff<0||shezhi.dff>1)
+    shezhi.dff=1;
 }
 
 void writeset()
@@ -80,13 +84,17 @@ void readset()
 
 void setset(int n,string v)
 {
-  static bool isstr[10]={0,1,0};
+  static bool isstr[10]={0,1,0,0,0,0,0,1,0};
   if (isstr[n])
   {
     switch(n)
     {
     case 1:
       shezhi.dev=v;
+      break;
+    case 7:
+      shezhi.dff=0;
+      shezhi.ftfile=v;
       break;
     }
   }
