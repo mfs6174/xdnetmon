@@ -132,7 +132,7 @@ void pcapinit() //初始化函数,由main()在程序启动时调用,开启pcap�
   pp=pcap_open_live(shezhi.dev.c_str(),changdu,0,0,ebuf);
   pcap_lookupnet(shezhi.dev.c_str(),&net,&mask,ebuf);
   string filter_exp=genfilter();
-  cout<<filter_exp<<endl;
+  //cout<<filter_exp<<endl;
   pcap_compile(pp, &fp, filter_exp.c_str(), 1, net);
   pcap_setfilter(pp, &fp);
 }
@@ -194,7 +194,6 @@ void huidiao(u_char *args, const struct pcap_pkthdr *tou,const u_char *bao)//回
   {
     fl=false;
   }
-  cout<<"test"<<endl;
   zuoid(id,fl);//生成mac和IP组合对应的ID字符串
   pushmap(id,tou->len);//调用map.cpp中的pushmap(),将这个包的大小存入缓存map
   if (!shezhi.wat)
