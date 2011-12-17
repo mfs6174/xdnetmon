@@ -153,7 +153,6 @@ void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入�
 void sqlws()
 {
   yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(shezhi.wat)+",jiange="+str(shezhi.jiange)+",pian="+str(shezhi.pian)+",nospd="+str(shezhi.nospd)+",dff="+str(shezhi.dff)+",ftfile='"+shezhi.ftfile+"' ";
-  cout<<yuju<<endl;
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
 }
