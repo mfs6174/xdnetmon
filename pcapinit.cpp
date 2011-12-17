@@ -97,14 +97,28 @@ string genfilter()
     ftfile>>rnet>>rmsk;
     ftstr="(ip proto 4) and ";
     if (rd=="g")
-      ftstr="(net "+rnet+" mask "+rmsk+" )";
+      ftstr+="(net "+rnet+" mask "+rmsk+" )";
     else
     {
-      in_addr tmpia;
-      tmpia.s_addr=net;
-      dnet=inet_ntoa(tmpia);
+      // 以下来自http://www.cnblogs.com/chenyadong/archive/2011/10/19/2217762.html
+      // 只知道ioctl是个内核函数,但是不明白如何用的
+      // 页面上有解释
+      // 有修改 修改错误处理方式 以下第6行处
+      int inet_sock,rt;
+      struct ifreq ifr;
+      inet_sock = socket(AF_INET, SOCK_DGRAM, 0);
+      strcpy(ifr.ifr_name, shezhi.dev.c_str());
+      //SIOCGIFADDR标志代表获取接口地址
+      rt=ioctl(inet_sock, SIOCGIFADDR, &ifr);
+      if (rt!=0)
+      {
+        cout<<"在指定的网络设备 "<<shezhi.dev<<" 上获取ip地址失败,请检查设置和网络连接"<<endl;
+        tuichu(-1);
+      }
+      dnet=inet_ntoa(((struct sockaddr_in*)&(ifr.ifr_addr))->sin_addr);  
+      //抄的获取网卡ip的部分结束
       cout<<"工作于单网卡模式，本机IP为 "<<dnet<<endl;
-      ftstr="(host "+dnet+")";
+      ftstr+="(host "+dnet+")";
     }
     while (ftfile>>dnet>>dmsk)
       ftstr=ftstr+" and (not (net "+dnet+" mask "+dmsk+") )";
