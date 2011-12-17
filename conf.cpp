@@ -40,7 +40,7 @@ void checkset(bool re=0)
     shezhi.pian=600;
     shezhi.nospd=0;
     shezhi.dff=1;
-    shezhi.ftfile.clear();
+    shezhi.ftfile="ip.txt";
     return;
   }
   ebuf[0]=0;
