@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
   readset();
   int oc;
   string tp;
-  while((oc=getopt(argc,argv,"d:i:t:o:wsphn"))!=-1)
+  while((oc=getopt(argc,argv,"d:i:t:o:f:wsphn"))!=-1)
   {
     switch(oc)
     {
@@ -61,6 +61,9 @@ int main(int argc, char *argv[])
       tp=optarg;
       setset(2,tp);
       break;
+    case 'f':
+      tp=optarg;
+      setset(7,tp);
     case 'w':
       setset(3,"1");
       break;
