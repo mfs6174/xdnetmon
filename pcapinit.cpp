@@ -81,7 +81,7 @@ string genfilter()
   }
   else
   {
-    ifstream ftfile(shezhi.ftfile);
+    ifstream ftfile(shezhi.ftfile.c_str());
     if (ftfile.fail())
     {
       cout<<"打开自定义内网ip段文件失败，请检查该文本文件：\""<<shezhi.ftfile<<"\"的存在性"<<endl;
@@ -100,11 +100,13 @@ string genfilter()
       ftstr="(net "+rnet+" mask "+rmsk+" )";
     else
     {
-      dnet=inet_ntoa(net);
+      in_addr tmpia;
+      tmpia.s_addr=net;
+      dnet=inet_ntoa(tmpia);
       cout<<"工作于单网卡模式，本机IP为 "<<dnet<<endl;
       ftstr="(host "+dnet+")";
     }
-    while (ftfile<<dnet<<dmsk)
+    while (ftfile>>dnet>>dmsk)
       ftstr=ftstr+" and (not (net "+dnet+" mask "+dmsk+") )";
     ftstr=ftstr+" and (not ( (dst net "+rnet+" mask "+rmsk+") and (src net "+rnet+" mask "+rmsk+") ) ) ";
     return ftstr;
