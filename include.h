@@ -39,6 +39,9 @@
 #include <netinet/in.h>
 #include<netinet/tcp.h>
 #include<netinet/udp.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
 #include <sqlite3.h>
 using namespace std;
 
