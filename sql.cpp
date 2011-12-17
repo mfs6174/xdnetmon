@@ -56,7 +56,7 @@ void sqlinit() //sql数据库初始化,打开或新建数据库,如果新建,新
   //表名:speed 表结构: mac ip为字符串,rate为浮点数,单位是字节/秒,end为本速度区间的结束时刻,unix时间戳表示
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
-  yuju="CREATE TABLE IF NOT EXISTS conf ( dev TEXT,outmode INT,wat INT,jiange INT,pian INT,nospd INT);";
+  yuju="CREATE TABLE IF NOT EXISTS conf ( dev TEXT,outmode INT,wat INT,jiange INT,pian INT,nospd INT,dff INT,ftfile TEXT );";
   //表名:settings 设置信息
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
@@ -152,7 +152,7 @@ void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入�
 
 void sqlws()
 {
-  yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(shezhi.wat)+",jiange="+str(shezhi.jiange)+",pian="+str(shezhi.pian)+",nospd="+str(shezhi.nospd);
+  yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(shezhi.wat)+",jiange="+str(shezhi.jiange)+",pian="+str(shezhi.pian)+",nospd="+str(shezhi.nospd)+",dff="+str(shezhi.dff)+",ftfile="+shezhi.ftfile;
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
 }
@@ -176,6 +176,8 @@ int sqlrs()
   shezhi.jiange=val(string(jieguo[lie+3]));
   shezhi.pian=val(string(jieguo[lie+4]));
   shezhi.nospd=val(string(jieguo[lie+5]));
+  shezhi.dff=val(string(jieguo[lie+6]));
+  shezhi.ftfile=string(jieguo[lie+7]);
   if (jieguo!=NULL)
     sqlite3_free_table(jieguo);
   return 0;
