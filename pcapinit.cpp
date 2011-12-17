@@ -27,7 +27,9 @@
 const int changdu=2000;//抓包最大的长度,期望减少复制工作,增加效率
 const int Ethchangdu=14; //以太头长度
 char ebuf[PCAP_ERRBUF_SIZE];//错误信息缓冲
-char filter_exp[] = " (ip net 192.168.0.0 mask 255.255.252.0) and (not (net 202.117.112.0 mask 255.255.240.0)) and (not (net 222.25.128.0 mask 255.255.192.0)) and (not (net 115.155.0.0 mask 255.255.192.0)) and (not (net 219.245.64.0 mask 255.255.192.0)) and (not (net 219.244.112.0 mask 255.255.240.0)) and (not (net 210.27.0.0 mask 255.255.240.0)) and (not ( (dst net 192.168.0.0 mask 255.255.252.0) and (src net 192.168.0.0 mask 255.255.252.0) ) ) "; /* 过 滤表达式 */
+/*
+string filter_exp = " (ip net 192.168.0.0 mask 255.255.252.0) and (not (net 202.117.112.0 mask 255.255.240.0)) and (not (net 222.25.128.0 mask 255.255.192.0)) and (not (net 115.155.0.0 mask 255.255.192.0)) and (not (net 219.245.64.0 mask 255.255.192.0)) and (not (net 219.244.112.0 mask 255.255.240.0)) and (not (net 210.27.0.0 mask 255.255.240.0)) and (not ( (dst net 192.168.0.0 mask 255.255.252.0) and (src net 192.168.0.0 mask 255.255.252.0) ) ) "; 旧的固定过滤表达式
+*/
 extern struct Shezhi shezhi;
 struct bpf_program fp;
 bpf_u_int32 mask; /* 网 络掩码 */
@@ -69,11 +71,52 @@ struct sniff_ip {
 sniff_ip *dangip; //IP头指针
 sniff_ethernet *dangeth; //以太头指针
 
+string genfilter()
+{
+  string ftstr("");
+  if (shezhi.dff)
+  {
+    ftstr=" (ip proto 4) and (net 192.168.0.0 mask 255.255.252.0) and (not (net 202.117.112.0 mask 255.255.240.0)) and (not (net 222.25.128.0 mask 255.255.192.0)) and (not (net 115.155.0.0 mask 255.255.192.0)) and (not (net 219.245.64.0 mask 255.255.192.0)) and (not (net 219.244.112.0 mask 255.255.240.0)) and (not (net 210.27.0.0 mask 255.255.240.0)) and (not ( (dst net 192.168.0.0 mask 255.255.252.0) and (src net 192.168.0.0 mask 255.255.252.0) ) ) "; //默认过滤表达式
+    return ftstr;
+  }
+  else
+  {
+    ifstream ftfile(shezhi.ftfile);
+    if (ftfile.fail())
+    {
+      cout<<"打开自定义内网ip段文件失败，请检查该文本文件：\""<<shezhi.ftfile<<"\"的存在性"<<endl;
+      tuichu(-1);
+    }
+    string rd,dnet,dmsk,rnet,rmsk;
+    ftfile>>rd;
+    if (rd!="s"&&rd!="g")
+    {
+      cout<<"识别工作模式选项失败，无法识别：\""<<rd<<"\",请在文件第一行写\"s\"代表单机模式，或者\"g\"代表网关模式"<<endl;
+      tuichu(-1);
+    }
+    ftfile>>rnet>>rmsk;
+    ftstr="(ip proto 4) and ";
+    if (rd=="g")
+      ftstr="(net "+rnet+" mask "+rmsk+" )";
+    else
+    {
+      dnet=inet_ntoa(net);
+      cout<<"工作于单网卡模式，本机IP为 "<<dnet<<endl;
+      ftstr="(host "+dnet+")";
+    }
+    while (ftfile<<dnet<<dmsk)
+      ftstr=ftstr+" and (not (net "+dnet+" mask "+dmsk+") )";
+    ftstr=ftstr+" and (not ( (dst net "+rnet+" mask "+rmsk+") and (src net "+rnet+" mask "+rmsk+") ) ) ";
+    return ftstr;
+  }
+}
+
 void pcapinit() //初始化函数,由main()在程序启动时调用,开启pcap句柄,编译过滤表达式,设置过滤器
 {
   pp=pcap_open_live(shezhi.dev.c_str(),changdu,0,0,ebuf);
   pcap_lookupnet(shezhi.dev.c_str(),&net,&mask,ebuf);
-  pcap_compile(pp, &fp, filter_exp, 1, net);
+  string filter_exp=genfilter();
+  pcap_compile(pp, &fp, filter_exp.c_str(), 1, net);
   pcap_setfilter(pp, &fp);
 }
 
