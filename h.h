@@ -50,7 +50,7 @@ void sqlinit();
 void sqlexit();
 double _mb(long long x);
 double _kb(long long x);
-void sqlws();
+void sqlws(int );
 int sqlrs();
 long long val(const string &x);   
 void setset(int ,string );

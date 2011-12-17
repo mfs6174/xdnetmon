@@ -150,9 +150,12 @@ void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入�
   sqlgeterr(sqlf);
 }
 
-void sqlws()
+void sqlws(int nr)
 {
-  yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(shezhi.wat)+",jiange="+str(shezhi.jiange)+",pian="+str(shezhi.pian)+",nospd="+str(shezhi.nospd)+",dff="+str(shezhi.dff)+",ftfile='"+shezhi.ftfile+"' ";
+  if (nr)
+    yuju="INSERT INTO conf VALUES ('"+shezhi.dev+"','"+str(shezhi.outmode)+"',"+str(shezhi.wat)+","+str(shezhi.jiange)+","+str(shezhi.pian)+","+str(shezhi.nospd)+","+str(shezhi.dff)+",'"+shezhi.ftfile+"')";
+  else
+    yuju="UPDATE conf SET dev='"+shezhi.dev+"',outmode="+str(shezhi.outmode)+",wat="+str(shezhi.wat)+",jiange="+str(shezhi.jiange)+",pian="+str(shezhi.pian)+",nospd="+str(shezhi.nospd)+",dff="+str(shezhi.dff)+",ftfile='"+shezhi.ftfile+"' ";
   sqlf=sqlite3_exec(db,yuju.c_str(),NULL,NULL,&sqlerr);
   sqlgeterr(sqlf);
 }
