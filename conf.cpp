@@ -66,12 +66,7 @@ void checkset(bool re=0)
 void writeset()
 {
   checkset(0);
-  int sta;
-  sta=sqlrs();
-  if (sta==0)
-    sqlws(0);
-  else
-    sqlws(1);
+  sqlws(0);
 }
 
 void readset()

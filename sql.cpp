@@ -152,6 +152,19 @@ void sqlspeed(const string &ss,long long liu,long long tt) //向数据库写入�
 
 void sqlws(int nr)
 {
+  char **jieguo=NULL;
+  int hang=0,lie=0;
+  yuju="SELECT * FROM conf;";
+  sqlf=sqlite3_get_table(db,yuju.c_str(),&jieguo,&hang,&lie,&sqlerr);
+  if (hang<1)
+  {
+    if (jieguo!=NULL)
+      sqlite3_free_table(jieguo);
+    sqlgeterr(sqlf);
+    nr=1;
+  }
+  else
+    nr=0;
   if (nr)
     yuju="INSERT INTO conf VALUES ('"+shezhi.dev+"','"+str(shezhi.outmode)+"',"+str(shezhi.wat)+","+str(shezhi.jiange)+","+str(shezhi.pian)+","+str(shezhi.nospd)+","+str(shezhi.dff)+",'"+shezhi.ftfile+"')";
   else
